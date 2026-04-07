@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MakeItWork — Digital Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root {
+  --blue: #1557FF;
+  --blue-dark: #0A3FCC;
+  --blue-light: #EEF3FF;
+  --blue-mid: #3B73FF;
+  --red: #E8213A;
+  --green: #12A44C;
+  --black: #0D0D0D;
+  --dark: #1A1A2E;
+  --grey: #4A4A68;
+  --grey-light: #8888A8;
+  --muted: #F5F6FA;
+  --white: #FFFFFF;
+  --border: #E4E7F0;
+  --shadow-sm: 0 2px 12px rgba(21,87,255,0.07);
+  --shadow-md: 0 8px 32px rgba(21,87,255,0.12);
+  --shadow-lg: 0 20px 60px rgba(21,87,255,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-head: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  color: var(--black);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ============================================================
+   UTILITY CLASSES
+============================================================ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 96px 0; }
+.section-sm { padding: 64px 0; }
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--blue-light); color: var(--blue);
+  font-family: var(--font-head); font-size: 12px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+}
+.tag::before { content: ''; width: 6px; height: 6px; background: var(--blue); border-radius: 50%; }
+.heading-xl {
+  font-family: var(--font-head); font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--black);
+}
+.heading-lg {
+  font-family: var(--font-head); font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700; line-height: 1.2; letter-spacing: -0.02em;
+}
+.heading-md {
+  font-family: var(--font-head); font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 700; line-height: 1.3;
+}
+.body-lg { font-size: 1.1rem; color: var(--grey); line-height: 1.75; font-weight: 400; }
+.body-md { font-size: 0.95rem; color: var(--grey); line-height: 1.7; }
+.text-blue { color: var(--blue); }
+.text-center { text-align: center; }
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.grid { display: grid; }
+.gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
+  letter-spacing: 0.3px; padding: 14px 28px; border-radius: 100px;
+  transition: var(--transition); white-space: nowrap;
+}
+.btn-primary {
+  background: var(--blue); color: var(--white);
+  box-shadow: 0 4px 20px rgba(21,87,255,0.35);
+}
+.btn-primary:hover {
+  background: var(--blue-dark); transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(21,87,255,0.45);
+}
+.btn-secondary {
+  background: transparent; color: var(--black);
+  border: 2px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: var(--white);
+  border: 2px solid rgba(255,255,255,0.5);
+}
+.btn-outline:hover { background: var(--white); color: var(--blue); border-color: var(--white); }
+.btn-white { background: var(--white); color: var(--blue); font-weight: 700; }
+.btn-white:hover { background: var(--blue-light); transform: translateY(-2px); }
+.btn-sm { padding: 8px 18px; font-size: 0.8rem; }
+
+/* Fade-in animation */
+.fade-up {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up.delay-1 { transition-delay: 0.1s; }
+.fade-up.delay-2 { transition-delay: 0.2s; }
+.fade-up.delay-3 { transition-delay: 0.3s; }
+.fade-up.delay-4 { transition-delay: 0.4s; }
+.fade-up.delay-5 { transition-delay: 0.5s; }
+
+/* ============================================================
+   1. ANNOUNCEMENT BAR
+============================================================ */
+#announce-bar {
+  background: linear-gradient(90deg, #C0392B, var(--red), #E8421B);
+  color: var(--white); text-align: center;
+  padding: 10px 24px; position: relative; z-index: 1001;
+  font-size: 0.88rem; font-weight: 500; letter-spacing: 0.2px;
+  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+}
+#announce-bar .fire { animation: flicker 1.5s ease-in-out infinite alternate; }
+@keyframes flicker { from { opacity: 1; } to { opacity: 0.75; } }
+#announce-bar .btn-announce {
+  background: rgba(255,255,255,0.2); color: var(--white);
+  border: 1.5px solid rgba(255,255,255,0.5); font-size: 0.78rem;
+  padding: 4px 14px; border-radius: 100px; font-family: var(--font-head);
+  font-weight: 700; transition: var(--transition); letter-spacing: 0.5px;
+}
+#announce-bar .btn-announce:hover { background: var(--white); color: var(--red); }
+#announce-close {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  background: none; color: rgba(255,255,255,0.7); font-size: 1.2rem;
+  cursor: pointer; line-height: 1; transition: var(--transition);
+}
+#announce-close:hover { color: var(--white); }
+
+/* ============================================================
+   2. HEADER / NAVBAR
+============================================================ */
+#navbar {
+  position: sticky; top: 0; z-index: 1000;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+#navbar.hidden { transform: translateY(-100%); }
+#navbar.scrolled {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-sm);
+  border-bottom-color: transparent;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px; gap: 32px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-head); font-size: 1.25rem; font-weight: 800;
+  color: var(--black); flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 38px; height: 38px; background: var(--blue);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: var(--white); font-size: 1.1rem; font-weight: 800;
+  box-shadow: 0 4px 12px rgba(21,87,255,0.3);
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px; list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-head); font-size: 0.88rem; font-weight: 600;
+  color: var(--grey); padding: 8px 14px; border-radius: 8px;
+  transition: var(--transition); letter-spacing: 0.2px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--blue); background: var(--blue-light); }
+.nav-cta { display: flex; align-items: center; gap: 10px; }
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--black);
+  border-radius: 2px; transition: var(--transition);
+}
+.mobile-nav {
+  display: none; position: fixed; inset: 0; background: var(--white);
+  z-index: 999; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-family: var(--font-head); font-size: 1.6rem; font-weight: 700;
+  color: var(--black); padding: 12px 32px; border-radius: 12px;
+  transition: var(--transition);
+}
+.mobile-nav a:hover { color: var(--blue); background: var(--blue-light); }
+.mobile-close {
+  position: absolute; top: 24px; right: 24px;
+  font-size: 1.8rem; color: var(--grey); cursor: pointer; font-weight: 300;
+}
+
+/* ============================================================
+   3. HERO SECTION
+============================================================ */
+#hero {
+  padding: 80px 0 96px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--white) 55%, var(--blue-light) 100%);
+}
+#hero::before {
+  content: '';
+  position: absolute; top: -120px; right: -120px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(21,87,255,0.08) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+#hero::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(21,87,255,0.05) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: center; position: relative; z-index: 1;
+}
+.hero-left {}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 100px; margin-bottom: 28px;
+  box-shadow: var(--shadow-sm); font-size: 0.82rem; font-weight: 600; color: var(--grey);
+}
+.hero-badge .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
+.hero-title { margin-bottom: 20px; }
+.hero-title .accent { color: var(--blue); position: relative; }
+.hero-title .accent::after {
+  content: '';
+  position: absolute; bottom: 2px; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+  border-radius: 2px; opacity: 0.4;
+}
+.hero-desc { margin-bottom: 36px; max-width: 480px; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-trust {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.hero-trust-avatars {
+  display: flex;
+}
+.hero-trust-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--white); margin-left: -8px;
+  background: var(--blue); display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: var(--white);
+  overflow: hidden;
+}
+.hero-trust-avatar:first-child { margin-left: 0; }
+.hero-trust-text { font-size: 0.82rem; color: var(--grey); font-weight: 500; }
+.hero-trust-text strong { color: var(--black); }
+.hero-right { position: relative; }
+.hero-illustration {
+  width: 100%; aspect-ratio: 1; max-width: 520px; margin: 0 auto;
+  position: relative;
+}
+.hero-card-float {
+  position: absolute; background: var(--white);
+  border-radius: var(--radius); box-shadow: var(--shadow-md);
+  padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+  animation: float 6s ease-in-out infinite;
+  border: 1px solid var(--border);
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.hero-card-float.card-1 { top: 10%; left: -8%; animation-delay: 0s; }
+.hero-card-float.card-2 { bottom: 18%; right: -6%; animation-delay: 2s; }
+.hero-card-float.card-3 { top: 55%; left: -12%; animation-delay: 4s; }
+.float-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.float-icon.blue { background: var(--blue-light); }
+.float-icon.green { background: #EDFBF3; }
+.float-icon.red { background: #FFF0F2; }
+.float-info .label { font-size: 0.7rem; color: var(--grey-light); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.float-info .value { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--black); }
+
+/* Hero SVG illustration */
+.hero-svg-wrap {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   4. STATS SECTION
+============================================================ */
+#stats {
+  background: var(--blue); padding: 64px 0;
+  position: relative; overflow: hidden;
+}
+#stats::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; position: relative; z-index: 1;
+}
+.stat-item {
+  text-align: center; padding: 40px 32px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+.stat-item:last-child { border-right: none; }
+.stat-icon {
+  width: 52px; height: 52px; background: rgba(255,255,255,0.12);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin: 0 auto 16px; border: 1px solid rgba(255,255,255,0.2);
+}
+.stat-number {
+  font-family: var(--font-head); font-size: 3rem; font-weight: 800;
+  color: var(--white); line-height: 1; margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 0.9rem; color: rgba(255,255,255,0.7); font-weight: 500; letter-spacing: 0.2px;
+}
+
+/* ============================================================
+   5. SERVICES CIRCLE SECTION
+============================================================ */
+#services { background: var(--muted); }
+.services-inner { text-align: center; }
+.services-title-area { margin-bottom: 72px; }
+.services-orbit {
+  position: relative; width: 580px; height: 580px; margin: 0 auto;
+}
+.orbit-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 160px; height: 160px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 20px rgba(21,87,255,0.08), 0 0 0 40px rgba(21,87,255,0.04);
+  z-index: 2;
+}
+.orbit-ring {
+  position: absolute; top: 50%; left: 50%;
+  border-radius: 50%; border: 1px dashed rgba(21,87,255,0.2);
+  transform: translate(-50%, -50%);
+  animation: spin-slow 30s linear infinite;
+}
+.orbit-ring.ring-1 { width: 280px; height: 280px; }
+.orbit-ring.ring-2 { width: 460px; height: 460px; animation-direction: reverse; }
+@keyframes spin-slow { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+.orbit-item {
+  position: absolute; top: 50%; left: 50%;
+  transform-origin: 0 0;
+  width: 110px; text-align: center;
+}
+.orbit-card {
+  background: var(--white); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm); padding: 16px 12px;
+  border: 1px solid var(--border); transition: var(--transition);
+  cursor: default;
+}
+.orbit-card:hover {
+  transform: scale(1.08); box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+}
+.orbit-card-icon { font-size: 1.5rem; margin-bottom: 6px; }
+.orbit-card-name {
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 700;
+  color: var(--black); line-height: 1.3; letter-spacing: 0.3px;
+}
+
+/* Mobile services grid */
+.services-mobile-grid {
+  display: none;
+  grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 500px; margin: 0 auto;
+}
+.service-mobile-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 24px 20px; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm); text-align: center; transition: var(--transition);
+}
+.service-mobile-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue); transform: translateY(-4px); }
+.service-mobile-icon { font-size: 2rem; margin-bottom: 10px; }
+.service-mobile-name { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: var(--black); }
+
+/* ============================================================
+   6. WHAT WE DO SECTION
+============================================================ */
+#what-we-do { background: var(--white); }
+.wwd-header { text-align: center; margin-bottom: 60px; }
+.wwd-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.wwd-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 36px 28px; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm); transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.wwd-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-mid));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--transition);
+}
+.wwd-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.wwd-card:hover::before { transform: scaleX(1); }
+.wwd-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--blue-light); display: flex; align-items: center;
+  justify-content: center; font-size: 1.5rem; margin-bottom: 20px;
+  transition: var(--transition);
+}
+.wwd-card:hover .wwd-icon { background: var(--blue); }
+.wwd-card-title {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+  color: var(--black); margin-bottom: 10px;
+}
+.wwd-card-desc { font-size: 0.9rem; color: var(--grey); line-height: 1.7; }
+
+/* ============================================================
+   7. PRICING PLANS (SEO & Marketing)
+============================================================ */
+#seo-plans { background: var(--muted); }
+.plans-header { text-align: center; margin-bottom: 60px; }
+.plans-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start;
+}
+.plan-card {
+  background: var(--white); border-radius: 20px;
+  border: 1px solid var(--border); padding: 36px 28px;
+  position: relative; transition: var(--transition); box-shadow: var(--shadow-sm);
+}
+.plan-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.plan-card.popular {
+  background: var(--blue); border-color: var(--blue);
+  box-shadow: 0 20px 60px rgba(21,87,255,0.3); transform: scale(1.03);
+}
+.plan-card.popular:hover { transform: scale(1.03) translateY(-6px); }
+.popular-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--green); color: var(--white);
+  font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+  padding: 5px 18px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase;
+  white-space: nowrap; box-shadow: 0 4px 12px rgba(18,164,76,0.3);
+}
+.plan-name {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px;
+}
+.plan-card:not(.popular) .plan-name { color: var(--grey); }
+.plan-card.popular .plan-name { color: rgba(255,255,255,0.7); }
+.plan-price-wrap { margin-bottom: 6px; display: flex; align-items: baseline; gap: 4px; }
+.plan-price {
+  font-family: var(--font-head); font-size: 2.4rem; font-weight: 800;
+  color: var(--black); line-height: 1;
+}
+.plan-card.popular .plan-price { color: var(--white); }
+.plan-price-period { font-size: 0.85rem; color: var(--grey-light); font-weight: 500; }
+.plan-card.popular .plan-price-period { color: rgba(255,255,255,0.6); }
+.plan-mrp {
+  font-size: 0.85rem; color: var(--grey-light);
+  margin-bottom: 24px;
+}
+.plan-card.popular .plan-mrp { color: rgba(255,255,255,0.55); }
+.plan-mrp s { color: var(--red); }
+.plan-divider {
+  height: 1px; background: var(--border); margin-bottom: 24px;
+}
+.plan-card.popular .plan-divider { background: rgba(255,255,255,0.15); }
+.plan-features { margin-bottom: 28px; }
+.plan-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.88rem; color: var(--grey); margin-bottom: 12px; line-height: 1.5;
+}
+.plan-card.popular .plan-feature { color: rgba(255,255,255,0.85); }
+.plan-feature .check {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+}
+.plan-card:not(.popular) .plan-feature .check { background: #EDFBF3; color: var(--green); }
+.plan-card.popular .plan-feature .check { background: rgba(255,255,255,0.2); color: var(--white); }
+.plan-btn { width: 100%; text-align: center; justify-content: center; border-radius: var(--radius-sm); }
+.plan-btn-outline {
+  background: transparent; border: 2px solid var(--border); color: var(--black);
+  font-family: var(--font-head); font-weight: 700; font-size: 0.88rem;
+  padding: 13px 24px; border-radius: var(--radius-sm); width: 100%;
+  transition: var(--transition); cursor: pointer; letter-spacing: 0.3px;
+}
+.plan-btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+.plan-btn-solid {
+  background: var(--white); color: var(--blue);
+  font-family: var(--font-head); font-weight: 700; font-size: 0.88rem;
+  padding: 13px 24px; border-radius: var(--radius-sm); width: 100%;
+  transition: var(--transition); cursor: pointer; letter-spacing: 0.3px; border: none;
+}
+.plan-btn-solid:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+/* ============================================================
+   8. TESTIMONIALS
+============================================================ */
+#testimonials { background: var(--white); }
+.testimonials-inner {
+  display: grid; grid-template-columns: 380px 1fr;
+  gap: 64px; align-items: center;
+}
+.testimonials-left img {
+  width: 100%; border-radius: 24px; aspect-ratio: 3/4; object-fit: cover;
+}
+.testimonials-left-placeholder {
+  width: 100%; aspect-ratio: 3/4; border-radius: 24px;
+  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
+.testimonials-left-placeholder::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px; width: 200px; height: 200px;
+  background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.testimonials-right {}
+.testimonial-slider { position: relative; overflow: hidden; }
+.testimonial-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+.testimonial-slide { min-width: 100%; }
+.testimonial-card {
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 36px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.testimonial-quote {
+  font-size: 3rem; color: var(--blue); line-height: 1; margin-bottom: 16px;
+  font-family: Georgia, serif; opacity: 0.3;
+}
+.testimonial-text {
+  font-size: 1rem; color: var(--grey); line-height: 1.8; margin-bottom: 24px;
+  font-style: italic;
+}
+.testimonial-stars { color: #FFAA00; font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px; }
+.testimonial-author { display: flex; align-items: center; gap: 14px; }
+.t-avatar {
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white);
+  flex-shrink: 0;
+}
+.t-name { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--black); }
+.t-role { font-size: 0.8rem; color: var(--grey-light); }
+.testimonial-controls {
+  display: flex; align-items: center; gap: 12px; margin-top: 24px;
+}
+.t-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--transition); color: var(--grey); font-size: 1rem;
+}
+.t-btn:hover { border-color: var(--blue); background: var(--blue); color: var(--white); }
+.t-dots { display: flex; gap: 6px; }
+.t-dot {
+  width: 8px; height: 8px; border-radius: 100px; background: var(--border);
+  cursor: pointer; transition: var(--transition);
+}
+.t-dot.active { background: var(--blue); width: 22px; }
+
+/* ============================================================
+   9. CALL TO ACTION
+============================================================ */
+#cta {
+  background: linear-gradient(135deg, #0A3FCC 0%, var(--blue) 50%, #3B73FF 100%);
+  padding: 96px 0; position: relative; overflow: hidden; text-align: center;
+}
+#cta::before {
+  content: '';
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cta-inner { position: relative; z-index: 1; }
+.cta-heading {
+  font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; color: var(--white); margin-bottom: 16px; letter-spacing: -0.02em;
+}
+.cta-sub { font-size: 1.05rem; color: rgba(255,255,255,0.75); margin-bottom: 40px; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.cta-phone {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); color: var(--white); border: 1.5px solid rgba(255,255,255,0.3);
+  padding: 14px 28px; border-radius: 100px; font-family: var(--font-head);
+  font-weight: 700; font-size: 0.9rem; transition: var(--transition);
+}
+.cta-phone:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+/* ============================================================
+   10. WEB DEV PLANS
+============================================================ */
+#web-plans { background: var(--muted); }
+.web-plans-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start;
+}
+.web-plan-card {
+  background: var(--white); border-radius: 20px; padding: 36px 28px;
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.web-plan-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-mid));
+  transform: scaleX(0); transform-origin: left; transition: transform var(--transition);
+}
+.web-plan-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.web-plan-card:hover::after { transform: scaleX(1); }
+.web-plan-card.featured { border-color: var(--blue); }
+.web-plan-card.featured::after { transform: scaleX(1); }
+.wp-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--blue-light); display: flex; align-items: center;
+  justify-content: center; font-size: 1.6rem; margin-bottom: 20px;
+}
+.wp-label { font-size: 0.72rem; font-weight: 700; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.wp-name { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+.wp-price { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--blue); margin-bottom: 6px; }
+.wp-mrp { font-size: 0.82rem; color: var(--grey-light); margin-bottom: 24px; }
+.wp-mrp s { color: var(--red); }
+.wp-features { margin-bottom: 28px; }
+.wp-feature {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 0.88rem; color: var(--grey); margin-bottom: 10px; line-height: 1.5;
+}
+.wp-check { color: var(--green); flex-shrink: 0; font-size: 0.85rem; margin-top: 2px; }
+
+/* ============================================================
+   11. TEAM SECTION
+============================================================ */
+#team { background: var(--white); }
+.team-header { margin-bottom: 48px; }
+.team-scroll-wrap { overflow-x: auto; padding-bottom: 20px; cursor: grab; }
+.team-scroll-wrap:active { cursor: grabbing; }
+.team-scroll-wrap::-webkit-scrollbar { height: 4px; }
+.team-scroll-wrap::-webkit-scrollbar-track { background: var(--muted); border-radius: 2px; }
+.team-scroll-wrap::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+.team-track { display: flex; gap: 20px; width: max-content; padding: 8px 4px; }
+.team-card {
+  width: 240px; border-radius: 20px; overflow: hidden;
+  background: var(--white); border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm); transition: var(--transition); flex-shrink: 0;
+}
+.team-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.team-card-top {
+  height: 180px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.team-avatar-bg {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.team-initials {
+  font-family: var(--font-head); font-size: 3rem; font-weight: 800;
+  color: var(--white); z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.team-badge-cert {
+  position: absolute; bottom: 10px; right: 10px; z-index: 2;
+  background: var(--white); border-radius: 8px; padding: 4px 8px;
+  font-size: 0.65rem; font-weight: 700; color: var(--blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  display: flex; align-items: center; gap: 4px;
+}
+.team-badge-award {
+  position: absolute; bottom: 10px; right: 10px; z-index: 2;
+  background: var(--white); border-radius: 8px; padding: 4px 8px;
+  font-size: 0.65rem; font-weight: 700; color: #FF8C00;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  display: flex; align-items: center; gap: 4px;
+}
+.team-card-info { padding: 20px; }
+.team-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+.team-role { font-size: 0.8rem; color: var(--blue); font-weight: 600; margin-bottom: 4px; }
+.team-exp { font-size: 0.78rem; color: var(--grey-light); }
+
+/* ============================================================
+   12. CONTACT FORM
+============================================================ */
+#contact { background: var(--muted); }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+.contact-left {}
+.contact-info-item {
+  display: flex; align-items: flex-start; gap: 14px; margin-bottom: 24px;
+}
+.contact-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem;
+}
+.contact-item-label { font-size: 0.78rem; color: var(--grey-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 2px; }
+.contact-item-val { font-weight: 600; color: var(--black); font-size: 0.95rem; }
+.contact-right {}
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 0.82rem; font-weight: 600; color: var(--black); letter-spacing: 0.3px; }
+.form-input, .form-select, .form-textarea {
+  padding: 13px 16px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.9rem;
+  color: var(--black); background: var(--white); transition: var(--transition); width: 100%;
+  appearance: none; -webkit-appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(21,87,255,0.08);
+}
+.form-textarea { resize: vertical; min-height: 110px; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234A4A68' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+.form-submit {
+  background: var(--blue); color: var(--white);
+  font-family: var(--font-head); font-weight: 700; font-size: 0.95rem;
+  padding: 15px 36px; border-radius: 100px; cursor: pointer; border: none;
+  box-shadow: 0 4px 20px rgba(21,87,255,0.35); transition: var(--transition);
+  align-self: flex-start;
+}
+.form-submit:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,87,255,0.45); }
+
+/* ============================================================
+   13. FOOTER
+============================================================ */
+footer {
+  background: var(--dark); color: rgba(255,255,255,0.7);
+  padding: 72px 0 0;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
+}
+.footer-brand {}
+.footer-logo {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.footer-logo-icon {
+  width: 38px; height: 38px; background: var(--blue);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: var(--white); font-size: 1rem; font-weight: 800;
+}
+.footer-logo-text { font-family: var(--font-head); font-size: 1.2rem; font-weight: 800; color: var(--white); }
+.footer-tagline { font-size: 0.88rem; line-height: 1.7; margin-bottom: 24px; max-width: 280px; }
+.footer-socials { display: flex; gap: 10px; }
+.social-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.6); font-size: 0.9rem; transition: var(--transition);
+}
+.social-btn:hover { background: var(--blue); border-color: var(--blue); color: var(--white); transform: translateY(-3px); }
+.footer-col-title {
+  font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+  color: var(--white); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 0.88rem; color: rgba(255,255,255,0.6); transition: var(--transition);
+}
+.footer-links a:hover { color: var(--white); padding-left: 4px; }
+.footer-community {}
+.community-box {
+  background: rgba(21,87,255,0.15); border: 1px solid rgba(21,87,255,0.3);
+  border-radius: var(--radius); padding: 20px; text-align: center;
+}
+.community-box p { font-size: 0.85rem; margin-bottom: 14px; }
+.community-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--blue); color: var(--white);
+  font-family: var(--font-head); font-weight: 700; font-size: 0.82rem;
+  padding: 10px 20px; border-radius: 100px; transition: var(--transition);
+}
+.community-btn:hover { background: var(--blue-dark); transform: translateY(-2px); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 0;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom-text { font-size: 0.82rem; color: rgba(255,255,255,0.4); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); transition: var(--transition); }
+.footer-bottom-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero-desc { max-width: 100%; }
+  .hero-btns { justify-content: center; }
+  .hero-trust { justify-content: center; }
+  .hero-right { display: none; }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .wwd-grid { grid-template-columns: repeat(2, 1fr); }
+  .plans-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .plan-card.popular { transform: scale(1); }
+  .plan-card.popular:hover { transform: translateY(-6px); }
+  .testimonials-inner { grid-template-columns: 1fr; }
+  .testimonials-left-placeholder { aspect-ratio: 16/9; max-height: 280px; }
+  .web-plans-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+  .stat-item:last-child { border-bottom: none; }
+  .services-orbit { display: none; }
+  .services-mobile-grid { display: grid; }
+  .wwd-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .heading-xl { font-size: 2.2rem; }
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .hero-btns .btn { justify-content: center; }
+  .cta-btns { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+   ANNOUNCEMENT BAR
+============================================================ -->
+<div id="announce-bar">
+  <span class="fire">🔥</span>
+  <span><strong>Special Offer:</strong> Get 1 Year FREE Hosting on Every Plan!</span>
+  <a href="#web-plans" class="btn-announce">View Plans</a>
+  <button id="announce-close" onclick="this.parentElement.remove()">×</button>
+</div>
+
+<!-- ============================================================
+   NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">M</div>
+        MakeItWork
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#services">About Us</a></li>
+        <li><a href="#what-we-do">Projects</a></li>
+        <li><a href="#seo-plans">Plans</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <span class="mobile-close" onclick="toggleMobileNav()">×</span>
+  <a href="#hero" onclick="toggleMobileNav()">Home</a>
+  <a href="#services" onclick="toggleMobileNav()">About Us</a>
+  <a href="#what-we-do" onclick="toggleMobileNav()">Projects</a>
+  <a href="#seo-plans" onclick="toggleMobileNav()">Plans</a>
+  <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+  <a href="#contact" onclick="toggleMobileNav()" style="background:var(--blue);color:#fff;border-radius:50px;margin-top:8px">Get Started →</a>
+</div>
+
+<!-- ============================================================
+   HERO SECTION
+============================================================ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge fade-up">
+          <span class="dot"></span>
+          Now accepting new clients for 2026
+        </div>
+        <h1 class="heading-xl hero-title fade-up delay-1">
+          We Build Brands<br>That <span class="accent text-blue">Grow Fast</span><br>& Convert More
+        </h1>
+        <p class="body-lg hero-desc fade-up delay-2">
+We help businesses scale faster with high-converting websites, powerful SEO strategies, and performance-driven marketing. 
+From building your digital presence to generating consistent leads — we turn your ideas into revenue.
+</p>
+        <div class="hero-btns fade-up delay-3">
+          <a href="#seo-plans" class="btn btn-primary">View Our Plans →</a>
+          <a href="#what-we-do" class="btn btn-secondary">See Our Work</a>
+        </div>
+        <div class="hero-trust fade-up delay-4">
+          <div class="hero-trust-avatars">
+            <div class="hero-trust-avatar" style="background:#1557FF">JM</div>
+            <div class="hero-trust-avatar" style="background:#12A44C">KS</div>
+            <div class="hero-trust-avatar" style="background:#E8213A">IT</div>
+            <div class="hero-trust-avatar" style="background:#FF8C00">SM</div>
+          </div>
+          <div class="hero-trust-text">
+            <strong>50+ happy clients</strong> trust MakeItWork
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-illustration">
+          <!-- Floating Cards -->
+          <div class="hero-card-float card-1 fade-up delay-2">
+            <div class="float-icon blue">📈</div>
+            <div class="float-info">
+              <div class="label">Organic Traffic</div>
+              <div class="value">+240% Growth</div>
+            </div>
+          </div>
+          <div class="hero-card-float card-2 fade-up delay-3">
+            <div class="float-icon green">✅</div>
+            <div class="float-info">
+              <div class="label">Projects Done</div>
+              <div class="value">10+ Delivered</div>
+            </div>
+          </div>
+          <div class="hero-card-float card-3 fade-up delay-4">
+            <div class="float-icon red">⭐</div>
+            <div class="float-info">
+              <div class="label">Client Rating</div>
+              <div class="value">4.5★ Avg</div>
+            </div>
+          </div>
+          <!-- Main Illustration SVG -->
+          <div class="hero-svg-wrap">
+            <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <circle cx="240" cy="240" r="200" fill="#EEF3FF"/>
+              <circle cx="240" cy="240" r="140" fill="#D6E4FF"/>
+              <circle cx="240" cy="240" r="80" fill="#B8CFFF"/>
+              <!-- Monitor -->
+              <rect x="155" y="170" width="170" height="110" rx="12" fill="#1557FF"/>
+              <rect x="163" y="178" width="154" height="86" rx="8" fill="white"/>
+              <!-- Screen content -->
+              <rect x="170" y="185" width="60" height="6" rx="3" fill="#EEF3FF"/>
+              <rect x="170" y="196" width="40" height="4" rx="2" fill="#D6E4FF"/>
+              <polyline points="170,230 190,210 215,222 240,200 265,215 290,195 310,205" stroke="#1557FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Stand -->
+              <rect x="222" y="280" width="36" height="18" rx="4" fill="#1557FF" opacity="0.3"/>
+              <rect x="208" y="295" width="64" height="8" rx="4" fill="#1557FF" opacity="0.2"/>
+              <!-- Phone -->
+              <rect x="330" y="200" width="44" height="76" rx="8" fill="#0D0D0D"/>
+              <rect x="334" y="208" width="36" height="56" rx="5" fill="white"/>
+              <rect x="336" y="210" width="32" height="40" rx="3" fill="#EEF3FF"/>
+              <circle cx="352" cy="275" r="4" fill="#D6E4FF"/>
+              <!-- Gears / Code symbols -->
+              <text x="92" y="180" font-size="28" fill="#1557FF" opacity="0.4">⚙️</text>
+              <text x="360" y="300" font-size="22" fill="#12A44C" opacity="0.5">✦</text>
+              <text x="105" y="320" font-size="18" fill="#E8213A" opacity="0.4">◆</text>
+              <!-- Stars -->
+              <circle cx="340" cy="170" r="4" fill="#FFAA00"/>
+              <circle cx="350" cy="155" r="2.5" fill="#FFAA00" opacity="0.6"/>
+              <circle cx="125" cy="260" r="3" fill="#1557FF"/>
+              <circle cx="110" cy="280" r="2" fill="#1557FF" opacity="0.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   STATS SECTION
+============================================================ -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-number" data-target="10" data-suffix="+">0+</div>
+        <div class="stat-label">Client Projects Delivered</div>
+      </div>
+      <div class="stat-item fade-up delay-2">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-number" data-target="6" data-suffix=" Certs">0</div>
+        <div class="stat-label">SEO Certified by IBM & Google</div>
+      </div>
+      <div class="stat-item fade-up delay-3">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-number" data-target="4.5" data-suffix="★" data-decimal="1">0★</div>
+        <div class="stat-label">Average Client Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   SERVICES CIRCLE SECTION
+============================================================ -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="services-inner">
+      <div class="services-title-area">
+        <div class="tag">Our Core Services</div>
+        <h2 class="heading-lg fade-up">Everything You Need to<br><span class="text-blue">Dominate Online</span></h2>
+      </div>
+
+      <!-- Desktop Orbit Layout -->
+      <div class="services-orbit fade-up">
+        <!-- Orbit rings -->
+        <div class="orbit-ring ring-1"></div>
+        <div class="orbit-ring ring-2"></div>
+        <!-- Center -->
+        <div class="orbit-center">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="30" fill="rgba(255,255,255,0.15)"/>
+            <text x="40" y="48" text-anchor="middle" font-size="28">🤖</text>
+          </svg>
+        </div>
+        <!-- 8 services positioned around center -->
+        <!-- Item 1: top -->
+        <div class="orbit-item" style="transform:translate(-55px,-260px)">
+          <div class="orbit-card"><div class="orbit-card-icon">💻</div><div class="orbit-card-name">Web Dev</div></div>
+        </div>
+        <!-- Item 2: top-right -->
+        <div class="orbit-item" style="transform:translate(120px,-210px)">
+          <div class="orbit-card"><div class="orbit-card-icon">🔍</div><div class="orbit-card-name">SEO Optimization</div></div>
+        </div>
+        <!-- Item 3: right -->
+        <div class="orbit-item" style="transform:translate(215px,-55px)">
+          <div class="orbit-card"><div class="orbit-card-icon">🎨</div><div class="orbit-card-name">Branding</div></div>
+        </div>
+        <!-- Item 4: bottom-right -->
+        <div class="orbit-item" style="transform:translate(130px,130px)">
+          <div class="orbit-card"><div class="orbit-card-icon">🖌️</div><div class="orbit-card-name">UI/UX Design</div></div>
+        </div>
+        <!-- Item 5: bottom -->
+        <div class="orbit-item" style="transform:translate(-55px,175px)">
+          <div class="orbit-card"><div class="orbit-card-icon">📣</div><div class="orbit-card-name">Marketing</div></div>
+        </div>
+        <!-- Item 6: bottom-left -->
+        <div class="orbit-item" style="transform:translate(-235px,130px)">
+          <div class="orbit-card"><div class="orbit-card-icon">⚡</div><div class="orbit-card-name">Performance</div></div>
+        </div>
+        <!-- Item 7: left -->
+        <div class="orbit-item" style="transform:translate(-325px,-55px)">
+          <div class="orbit-card"><div class="orbit-card-icon">🛒</div><div class="orbit-card-name">E-Commerce</div></div>
+        </div>
+        <!-- Item 8: top-left -->
+        <div class="orbit-item" style="transform:translate(-235px,-210px)">
+          <div class="orbit-card"><div class="orbit-card-icon">📊</div><div class="orbit-card-name">Analytics</div></div>
+        </div>
+      </div>
+
+      <!-- Mobile Grid -->
+      <div class="services-mobile-grid">
+        <div class="service-mobile-card fade-up"><div class="service-mobile-icon">💻</div><div class="service-mobile-name">Web Development</div></div>
+        <div class="service-mobile-card fade-up delay-1"><div class="service-mobile-icon">🔍</div><div class="service-mobile-name">SEO Optimization</div></div>
+        <div class="service-mobile-card fade-up delay-2"><div class="service-mobile-icon">🎨</div><div class="service-mobile-name">Branding</div></div>
+        <div class="service-mobile-card fade-up delay-3"><div class="service-mobile-icon">🖌️</div><div class="service-mobile-name">UI/UX Design</div></div>
+        <div class="service-mobile-card fade-up delay-4"><div class="service-mobile-icon">📣</div><div class="service-mobile-name">Marketing Strategy</div></div>
+        <div class="service-mobile-card fade-up delay-5"><div class="service-mobile-icon">⚡</div><div class="service-mobile-name">Performance Opt.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   WHAT WE DO SECTION
+============================================================ -->
+<section id="what-we-do" class="section">
+  <div class="container">
+    <div class="wwd-header">
+      <div class="tag">What We Do</div>
+      <h2 class="heading-lg fade-up">Solutions That Drive <span class="text-blue">Real Results</span></h2>
+      <p class="body-lg fade-up delay-1" style="max-width:540px;margin:12px auto 0">We combine strategy, design, and technology to create digital experiences that grow your business.</p>
+    </div>
+    <div class="wwd-grid">
+      <div class="wwd-card fade-up">
+        <div class="wwd-icon">💻</div>
+        <div class="wwd-card-title">Website Development</div>
+        <p class="wwd-card-desc">Custom, fast-loading websites built with clean code. From landing pages to complex web apps — pixel-perfect on every device.</p>
+      </div>
+      <div class="wwd-card fade-up delay-1">
+        <div class="wwd-icon">🔍</div>
+        <div class="wwd-card-title">Search Engine Optimization</div>
+        <p class="wwd-card-desc">Rank higher, attract the right audience, and generate organic leads consistently with our proven SEO methodology.</p>
+      </div>
+      <div class="wwd-card fade-up delay-2">
+        <div class="wwd-icon">📣</div>
+        <div class="wwd-card-title">Performance Marketing</div>
+        <p class="wwd-card-desc">Meta, Instagram & Google Ads campaigns managed by certified experts. Maximum ROAS with every rupee spent.</p>
+      </div>
+      <div class="wwd-card fade-up delay-3">
+        <div class="wwd-icon">🎨</div>
+        <div class="wwd-card-title">Brand Identity & Design</div>
+        <p class="wwd-card-desc">Logos, brand kits, and visual identities that communicate trust and authority at a glance.</p>
+      </div>
+      <div class="wwd-card fade-up delay-4">
+        <div class="wwd-icon">📱</div>
+        <div class="wwd-card-title">Social Media Management</div>
+        <p class="wwd-card-desc">Strategic content calendars, engaging creatives, and community management that builds a loyal following.</p>
+      </div>
+      <div class="wwd-card fade-up delay-5">
+        <div class="wwd-icon">⚡</div>
+        <div class="wwd-card-title">Web Performance & Speed</div>
+        <p class="wwd-card-desc">Core Web Vitals optimization, caching, CDN setup, and technical audits to make your site blazingly fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   SEO & MARKETING PLANS
+============================================================ -->
+<section id="seo-plans" class="section">
+  <div class="container">
+    <div class="plans-header">
+      <div class="tag">SEO & Marketing Plans</div>
+      <h2 class="heading-lg fade-up">Transparent Pricing,<br><span class="text-blue">Exceptional Results</span></h2>
+      <p class="body-lg fade-up delay-1" style="max-width:500px;margin:12px auto 0">Choose the plan that fits your growth stage. No hidden fees, no surprises.</p>
+    </div>
+    <div class="plans-grid">
+      <!-- Starter -->
+      <div class="plan-card fade-up">
+        <div class="plan-name">Starter Plan</div>
+        <div class="plan-price-wrap">
+          <div class="plan-price">₹8,000</div>
+          <div class="plan-price-period">/month</div>
+        </div>
+        <div class="plan-mrp">MRP: <s>₹12,000</s> — Save ₹4,000</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>SEO Optimization</div>
+          <div class="plan-feature"><span class="check">✓</span>3 Blog Articles/month</div>
+          <div class="plan-feature"><span class="check">✓</span>Website Speed Optimization</div>
+          <div class="plan-feature"><span class="check">✓</span>Basic Analytics Reports</div>
+          <div class="plan-feature"><span class="check">✓</span>Monthly Performance Review</div>
+        </div>
+        <button class="plan-btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+      <!-- Premium (Popular) -->
+      <div class="plan-card popular fade-up delay-1">
+        <div class="popular-badge">★ Most Popular</div>
+        <div class="plan-name">Premium Plan</div>
+        <div class="plan-price-wrap">
+          <div class="plan-price">₹10,000</div>
+          <div class="plan-price-period">/month</div>
+        </div>
+        <div class="plan-mrp">MRP: <s>₹15,000</s> — Save ₹5,000</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>Everything in Starter</div>
+          <div class="plan-feature"><span class="check">✓</span>₹1,000 Ad Spend (Meta/Instagram)</div>
+          <div class="plan-feature"><span class="check">✓</span>10 Blog Articles/month</div>
+          <div class="plan-feature"><span class="check">✓</span>New Pages Creation</div>
+          <div class="plan-feature"><span class="check">✓</span>Social Media Management</div>
+          <div class="plan-feature"><span class="check">✓</span>Priority Support</div>
+        </div>
+        <button class="plan-btn-solid" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+      <!-- Business -->
+      <div class="plan-card fade-up delay-2">
+        <div class="plan-name">Business Plan</div>
+        <div class="plan-price-wrap">
+          <div class="plan-price">₹15,000</div>
+          <div class="plan-price-period">/month</div>
+        </div>
+        <div class="plan-mrp">MRP: <s>₹22,000</s> — Save ₹7,000</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>Full Website Setup (.com/.in)</div>
+          <div class="plan-feature"><span class="check">✓</span>Full SEO & Technical Optimization</div>
+          <div class="plan-feature"><span class="check">✓</span>Backend Support</div>
+          <div class="plan-feature"><span class="check">✓</span>₹2,000 Ad Spend</div>
+          <div class="plan-feature"><span class="check">✓</span>Profile Creation & Growth</div>
+          <div class="plan-feature"><span class="check">✓</span>Premium Agency-Level Services</div>
+        </div>
+        <button class="plan-btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   TESTIMONIALS
+============================================================ -->
+<section id="testimonials" class="section">
+  <div class="container">
+    <div class="testimonials-inner">
+      <div class="testimonials-left fade-up">
+        <div class="testimonials-left-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.4">
+            <circle cx="60" cy="40" r="24" fill="white"/>
+            <ellipse cx="60" cy="95" rx="38" ry="25" fill="white"/>
+          </svg>
+          <!-- decorative -->
+          <div style="position:absolute;top:20px;left:20px;background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 14px;font-size:0.8rem;font-weight:700;color:white;backdrop-filter:blur(8px)">
+            ★★★★★ Reviews
+          </div>
+          <div style="position:absolute;bottom:20px;left:20px;background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 14px;font-size:0.75rem;font-weight:600;color:white;backdrop-filter:blur(8px)">
+            50+ Happy Clients
+          </div>
+        </div>
+      </div>
+      <div class="testimonials-right fade-up delay-2">
+        <div class="tag">Client Testimonials</div>
+        <h2 class="heading-md" style="margin-bottom:32px">What Our Clients<br><span class="text-blue">Say About Us</span></h2>
+        <div class="testimonial-slider">
+          <div class="testimonial-track" id="testimonialTrack">
+            <!-- Slide 1 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">MakeItWork transformed our online presence completely. Our website traffic increased by 3x within just 3 months. The team is incredibly professional and results-driven.</p>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-author">
+                  <div class="t-avatar" style="background:#1557FF">RK</div>
+                  <div>
+                    <div class="t-name">Rahul Kumar</div>
+                    <div class="t-role">CEO, TechVista Solutions — 4.9★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">Their SEO strategy brought us from page 10 to page 1 on Google for our main keywords. The ROI has been phenomenal. Highly recommend MakeItWork!</p>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-author">
+                  <div class="t-avatar" style="background:#12A44C">PS</div>
+                  <div>
+                    <div class="t-name">Priya Sharma</div>
+                    <div class="t-role">Marketing Head, GrowthBridge — 4.5★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">The e-commerce website they built for us is stunning and converts incredibly well. Sales went up 180% in the first month. Worth every rupee!</p>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-author">
+                  <div class="t-avatar" style="background:#E8213A">AM</div>
+                  <div>
+                    <div class="t-name">Arjun Mehta</div>
+                    <div class="t-role">Founder, ShopEase India — 4.8★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">Professional team, timely delivery, and outstanding results. Their content strategy and social media management have made our brand go viral multiple times!</p>
+                <div class="testimonial-stars">★★★★☆</div>
+                <div class="testimonial-author">
+                  <div class="t-avatar" style="background:#FF8C00">ND</div>
+                  <div>
+                    <div class="t-name">Neha Dubey</div>
+                    <div class="t-role">Brand Manager, StyleHouse — 4.1★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 5 -->
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">From branding to website to ads — MakeItWork handles everything seamlessly. They're not just an agency, they're true growth partners. Absolutely love the team!</p>
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-author">
+                  <div class="t-avatar" style="background:#7C3AED">VR</div>
+                  <div>
+                    <div class="t-name">Vikram Rao</div>
+                    <div class="t-role">Director, InnovateCo — 4.7★</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-controls">
+          <button class="t-btn" id="tPrev">←</button>
+          <button class="t-btn" id="tNext">→</button>
+          <div class="t-dots" id="tDots">
+            <div class="t-dot active"></div>
+            <div class="t-dot"></div>
+            <div class="t-dot"></div>
+            <div class="t-dot"></div>
+            <div class="t-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   CALL TO ACTION
+============================================================ -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <div class="tag" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);">Ready to Grow?</div>
+      <h2 class="cta-heading">Want to grow your<br>business with us?</h2>
+      <p class="cta-sub">Join 50+ businesses that trust MakeItWork to drive real results.<br>Let's build something extraordinary together.</p>
+      <div class="cta-btns">
+        <a href="tel:+91 8249224513" class="btn btn-white">📞 Call Now</a>
+        <a href="#contact" class="cta-phone">💬 Connect With Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   WEBSITE DEVELOPMENT PLANS
+============================================================ -->
+<section id="web-plans" class="section">
+  <div class="container">
+    <div class="plans-header">
+      <div class="tag">Website Development</div>
+      <h2 class="heading-lg fade-up">World-Class Websites at<br><span class="text-blue">Every Budget</span></h2>
+      <p class="body-lg fade-up delay-1" style="max-width:500px;margin:12px auto 0">From simple landing pages to full-featured e-commerce stores — we've got you covered.</p>
+    </div>
+    <div class="web-plans-grid">
+      <!-- Plan 1 -->
+      <div class="web-plan-card fade-up">
+        <div class="wp-icon">💻</div>
+        <div class="wp-label">Plan 01</div>
+        <div class="wp-name">Starter Website</div>
+        <div class="wp-price">₹10,000</div>
+        <div class="wp-mrp">One-time</div>
+        <div class="wp-features">
+          <div class="wp-feature"><span class="wp-check">✓</span>Landing Page / 4–5 Pages</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Free Premium Hosting (1 Year)</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Unlimited Bandwidth</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>WordPress or Custom Code</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Mobile Responsive Design</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>SSL Certificate</div>
+        </div>
+        <button class="plan-btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get This Plan</button>
+      </div>
+      <!-- Plan 2 -->
+      <div class="web-plan-card featured fade-up delay-1">
+        <div class="popular-badge" style="background:var(--blue)">🚀 Most Value</div>
+        <div class="wp-icon" style="background:var(--blue-light)">🚀</div>
+        <div class="wp-label">Plan 02</div>
+        <div class="wp-name">Pro Website</div>
+        <div class="wp-price">₹20,000</div>
+        <div class="wp-mrp">One-time</div>
+        <div class="wp-features">
+          <div class="wp-feature"><span class="wp-check">✓</span>Full Stylish Website</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>AI Integrations</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Premium Themes & Templates</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Advanced Features & Plugins</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Everything in Plan 01</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Priority 30-day Support</div>
+        </div>
+        <button class="plan-btn-outline" style="border-color:var(--blue);color:var(--blue)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get This Plan</button>
+      </div>
+      <!-- Plan 3 -->
+      <div class="web-plan-card fade-up delay-2">
+        <div class="wp-icon">🛒</div>
+        <div class="wp-label">Plan 03</div>
+        <div class="wp-name">E-Commerce Store</div>
+        <div class="wp-price">₹35,000</div>
+        <div class="wp-mrp">One-time</div>
+        <div class="wp-features">
+          <div class="wp-feature"><span class="wp-check">✓</span>Full Shopify E-Commerce Store</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Payment Gateway Integration</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Complete Setup & Configuration</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Professional Agency-Level Build</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>Product Catalog Setup</div>
+          <div class="wp-feature"><span class="wp-check">✓</span>60-day Post-launch Support</div>
+        </div>
+        <button class="plan-btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get This Plan</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   TEAM SECTION
+============================================================ -->
+<section id="team" class="section">
+  <div class="container">
+    <div class="team-header fade-up">
+      <div class="tag">Our Team</div>
+      <h2 class="heading-lg">Meet the Minds Behind<br><span class="text-blue">MakeItWork</span></h2>
+      <p class="body-lg" style="margin-top:10px">A passionate team of experts dedicated to your growth.</p>
+    </div>
+    <div class="team-scroll-wrap fade-up delay-1">
+      <div class="team-track" id="teamTrack">
+        <!-- Jyotiraditya -->
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-avatar-bg" style="background:linear-gradient(135deg,#1557FF,#3B73FF)">
+              <div class="team-initials">JM</div>
+            </div>
+            <div class="team-badge-cert">🏆 IBM & Google</div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-name">Jyotiraditya Mishra</div>
+            <div class="team-role">Co-founder & CEO</div>
+            <div class="team-exp">4+ years experience</div>
+          </div>
+        </div>
+        <!-- Kuntal -->
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-avatar-bg" style="background:linear-gradient(135deg,#0D0D0D,#2A2A4A)">
+              <div class="team-initials">KS</div>
+            </div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-name">Kuntal Shit</div>
+            <div class="team-role">Co-founder & CTO</div>
+            <div class="team-exp">2+ years experience</div>
+          </div>
+        </div>
+        <!-- Isha -->
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-avatar-bg" style="background:linear-gradient(135deg,#12A44C,#0D7A38)">
+              <div class="team-initials">IT</div>
+            </div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-name">Isha Thapa</div>
+            <div class="team-role">Web Developer</div>
+            <div class="team-exp">Skilled & detail-oriented</div>
+          </div>
+        </div>
+        <!-- Sneha -->
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-avatar-bg" style="background:linear-gradient(135deg,#E8213A,#B5001F)">
+              <div class="team-initials">SM</div>
+            </div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-name">Sneha Mahakud</div>
+            <div class="team-role">UI/UX Designer</div>
+            <div class="team-exp">Creative & user-focused</div>
+          </div>
+        </div>
+        <!-- Gyanranjan -->
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-avatar-bg" style="background:linear-gradient(135deg,#FF8C00,#CC6600)">
+              <div class="team-initials">GM</div>
+            </div>
+            <div class="team-badge-award">🏅 Vivek Bindra</div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-name">Gyanranjan Moharana</div>
+            <div class="team-role">Marketing Specialist</div>
+            <div class="team-exp">Bada Business Marketer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   CONTACT FORM
+============================================================ -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left fade-up">
+        <div class="tag">Get In Touch</div>
+        <h2 class="heading-lg" style="margin-bottom:16px">Let's Build<br><span class="text-blue">Something Great</span></h2>
+        <p class="body-lg" style="margin-bottom:40px">Tell us about your project and we'll get back to you within 24 hours with a custom plan.</p>
+        <div class="contact-info-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-val">Bhubaneswar, Odisha, India</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-item-label">Phone / WhatsApp</div>
+            <div class="contact-item-val">+91 8249224513</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-val">hello@makeitwork.com</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">⏰</div>
+          <div>
+            <div class="contact-item-label">Response Time</div>
+            <div class="contact-item-val">Within 24 Hours</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right fade-up delay-2">
+        <form class="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Your Name *</label>
+              <input type="text" class="form-input" placeholder="Rahul Kumar" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">WhatsApp Number *</label>
+              <input type="tel" class="form-input" placeholder="+91 98765 43210" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="you@company.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service Required</label>
+            <select class="form-select">
+              <option value="">Select a service...</option>
+              <option>Website</option>
+              <option>Landing Page</option>
+              <option>WordPress</option>
+              <option>Custom Code</option>
+              <option>E-commerce</option>
+              <option>SEO Services</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message / Feedback</label>
+            <textarea class="form-textarea" placeholder="Tell us about your project goals, timeline, and any specific requirements..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">M</div>
+          <div class="footer-logo-text">MakeItWork</div>
+        </div>
+        <p class="footer-tagline">We help businesses grow online through smart design, powerful SEO, and performance marketing. Your success is our mission.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="#hero">Home</a>
+          <a href="#services">About Us</a>
+          <a href="#what-we-do">Projects</a>
+          <a href="#seo-plans">Plans</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-community">
+        <div class="footer-col-title">Join Community</div>
+        <div class="community-box">
+          <p>Join our community of <strong style="color:white">500+ business owners</strong> and get free growth tips, strategies & updates.</p>
+          <a href="#" class="community-btn">Join Now →</a>
+        </div>
+        <div style="margin-top:20px;font-size:0.82rem;opacity:0.5">
+          <div style="margin-bottom:6px">🏆 IBM Certified Agency</div>
+          <div style="margin-bottom:6px">🔍 Google SEO Certified</div>
+          <div>⭐ 4.5★ Avg Rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-text">© 2026 MakeItWork.com — All Rights Reserved</div>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast notification -->
+<div id="toast" style="
+  position:fixed;bottom:32px;right:32px;z-index:9999;
+  background:var(--green);color:white;
+  font-family:var(--font-head);font-weight:700;font-size:0.9rem;
+  padding:14px 24px;border-radius:100px;
+  box-shadow:0 8px 24px rgba(18,164,76,0.35);
+  transform:translateY(80px);opacity:0;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+  pointer-events:none;
+">✅ Message sent! We'll be in touch soon.</div>
+
+<!-- ============================================================
+   JAVASCRIPT
+============================================================ -->
+<script>
+/* ---- Navbar scroll behavior ---- */
+let lastScroll = 0;
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const cur = window.pageYOffset;
+  if (cur > lastScroll && cur > 120) {
+    navbar.classList.add('hidden');
+  } else {
+    navbar.classList.remove('hidden');
+  }
+  if (cur > 60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+  lastScroll = cur <= 0 ? 0 : cur;
+});
+
+/* ---- Mobile Nav ---- */
+function toggleMobileNav() {
+  document.getElementById('mobile-nav').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobile-nav').classList.contains('open') ? 'hidden' : '';
+}
+
+/* ---- Intersection Observer for fade-up ---- */
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+
+/* ---- Counter animation ---- */
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const decimal = parseInt(el.dataset.decimal || 0);
+  const duration = 2000;
+  const step = 50;
+  const steps = duration / step;
+  let current = 0;
+  const inc = target / steps;
+  const timer = setInterval(() => {
+    current += inc;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = (decimal > 0 ? current.toFixed(decimal) : Math.floor(current)) + suffix;
+  }, step);
+}
+
+const statsSection = document.getElementById('stats');
+const statsObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.stat-number').forEach(animateCounter);
+    statsObserver.unobserve(statsSection);
+  }
+}, { threshold: 0.3 });
+statsObserver.observe(statsSection);
+
+/* ---- Testimonial Slider ---- */
+let tCurrent = 0;
+const tTotal = 5;
+const tTrack = document.getElementById('testimonialTrack');
+const tDots = document.querySelectorAll('.t-dot');
+
+function goToSlide(n) {
+  tCurrent = (n + tTotal) % tTotal;
+  tTrack.style.transform = `translateX(-${tCurrent * 100}%)`;
+  tDots.forEach((d, i) => d.classList.toggle('active', i === tCurrent));
+}
+
+document.getElementById('tPrev').onclick = () => goToSlide(tCurrent - 1);
+document.getElementById('tNext').onclick = () => goToSlide(tCurrent + 1);
+tDots.forEach((d, i) => d.addEventListener('click', () => goToSlide(i)));
+
+// Auto-advance
+setInterval(() => goToSlide(tCurrent + 1), 5000);
+
+/* ---- Team drag scroll ---- */
+const teamTrack = document.getElementById('teamTrack').parentElement;
+let isDown = false, startX, scrollLeft;
+teamTrack.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - teamTrack.offsetLeft; scrollLeft = teamTrack.scrollLeft; });
+teamTrack.addEventListener('mouseleave', () => isDown = false);
+teamTrack.addEventListener('mouseup', () => isDown = false);
+teamTrack.addEventListener('mousemove', e => {
+  if (!isDown) return; e.preventDefault();
+  const x = e.pageX - teamTrack.offsetLeft;
+  teamTrack.scrollLeft = scrollLeft - (x - startX) * 1.5;
+});
+
+/* ---- Form submit ---- */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const toast = document.getElementById('toast');
+  toast.style.transform = 'translateY(0)'; toast.style.opacity = '1';
+  setTimeout(() => { toast.style.transform = 'translateY(80px)'; toast.style.opacity = '0'; }, 4000);
+  e.target.reset();
+}
+
+/* ---- Smooth scroll for all anchor links ---- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+/* ---- Active nav link highlighting ---- */
+const sections = document.querySelectorAll('section[id], #hero');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>
